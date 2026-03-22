@@ -1,0 +1,9 @@
+- 🏢 Current Role: Senior Automation Engineer at Jifiti (Aug 2024 - Present). Built Playwright automation from scratch. Lead validation during massive Kubernetes migration. Handled DevOps infrastructure checks and JMeter load testing.
+- 🚌 Moovit (Nov 2020 - July 2024): Promoted from Senior QA Automation to Tools Developer! Built complex full-stack desktop internal tools for QA/Devs using React, Vite, Node.js, and Electron. Led QA integrations with BI teams and Braze.
+- 🛡️ ironSource (Dec 2018 - Nov 2020): QA Automation Engineer. Developed browser DOM scripts. Traced API traffic heavily with Fiddler/Charles. Worked entirely on AWS infrastructure (S3, Cloudfront).
+- 📱 Moveo (Feb 2017 - Dec 2018): QA Engineer. Functional, integration, DB validation covering SQL/NoSQL. Handled intense mobile logs via Android Studio and Xcode.
+- 🎓 Education & Certs: QA Web/Mobile courses and Full Stack Development from SVCollege. Certified in ECMAScript 6+ (ES6) and Web Security (User Authentication/Access Control).
+- 🤝 Volunteer Work: Actively volunteered as a Frontend Developer.
+- 🔗 Projects: Check out my GitHub repos at github.com/DvirLevy for test architectures and tools!
+- 💻 Master Skills: TypeScript, JavaScript, Playwright, React, Node.js, E2E testing, Performance testing, AWS, Docker, Kubernetes, Azure DevOps, Jenkins.
+- 📞 Contact: dvirlh1@gmail.com 

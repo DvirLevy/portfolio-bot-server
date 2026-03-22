@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Portfolio AI Avatar</title>
+    <!-- Basic styling for your Netlify widget -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: transparent;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* 
+         * The Avatar Container acts as the ONLY UI.
+         * Default: disabled/idle state with a dark/gray border
+         */
+        #avatar-container {
+            width: 220px;
+            height: 220px;
+            border-radius: 50%;
+            overflow: hidden;
+            background: #222;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+            border: 4px solid #555;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        #avatar-placeholder {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center 20%;
+            /* Focus on the upper face area */
+            transform: scale(1.6);
+            /* Zoom dramatically to mimic D-ID's face crop */
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1;
+            transition: opacity 0.5s ease;
+        }
+
+        #avatar-placeholder.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* Active recording state */
+        #avatar-container.recording {
+            border-color: #4ade80;
+            /* Green */
+            box-shadow: 0 0 30px rgba(74, 222, 128, 0.8);
+        }
+
+        /* Thinking/Processing state (optional cool effect) */
+        #avatar-container.thinking {
+            border-color: #f59e0b;
+            /* Orange */
+            box-shadow: 0 0 30px rgba(245, 158, 11, 0.8);
+        }
+
+        video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: relative;
+            z-index: 2;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Only the circle is left in the UI! -->
+    <div id="avatar-container" onclick="toggleListening()">
+        <img id="avatar-placeholder" src="dvir.png" alt="Loading Avatar..." />
+        <video id="did-video" autoplay playsinline muted></video>
+    </div>
+
+    <script>
+        // Ensure the placeholder disappears specifically when the video officially begins rendering frames
+        document.getElementById('did-video').addEventListener('playing', () => {
+            const placeholder = document.getElementById('avatar-placeholder');
+            if (placeholder) placeholder.classList.add('hidden');
+        });
+        const SOURCE_IMAGE_URL = "s3://d-id-images-prod/google-oauth2|100268267952939492273/img_IztA4oF90ZkkXB1zmjC4y/dvir.png";
+        const BACKEND_URL = "http://localhost:8000";
+
+        let peerConnection;
+        let streamId;
+        let sessionId;
+        let isConnected = false;
+        let isConnecting = false; // Lock to prevent React Strict Mode duplicate firing
+
+        // Auto-connect if run locally, otherwise wait for React
+        if (window === window.parent) {
+            connectDID();
+        }
+
+        // Listen for the React App sending the connection trigger or questions
+        window.addEventListener("message", (event) => {
+            if (event.data === "CONNECT_AVATAR" && !isConnected && !isConnecting) {
+                connectDID();
+            } else if (event.data === "DESTROY_AVATAR") {
+                closeWidget();
+            } else if (event.data && event.data.type === "ASK_AVATAR") {
+                console.log(event.data);
+                if (isConnected && !isThinking) {
+                    // We REMOVED the early un-muting here because it completely breaks the video.play() logic down below if the browser blocks it!
+                    askBot(event.data.question);
+                }
+            }
+        });
+
+        // Notify React parent that the widget script is fully compiled and listening
+        window.parent.postMessage("WIDGET_LOADED", "*");
+
+        function closeWidget() {
+            if (streamId && sessionId) {
+                fetch(`${BACKEND_URL}/api/did/stream/${streamId}`, {
+                    method: 'DELETE',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ session_id: sessionId }),
+                    keepalive: true
+                });
+                streamId = null;
+                isConnected = false;
+                isConnecting = false;
+            }
+            window.parent.postMessage("WIDGET_CLOSED", "*");
+        }
+
+        async function connectDID() {
+            if (isConnecting) return;
+            isConnecting = true;
+
+            try {
+                // 1. Create Stream
+                const createRes = await fetch(`${BACKEND_URL}/api/did/create-stream`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ source_url: SOURCE_IMAGE_URL })
+                });
+                const createData = await createRes.json();
+
+                if (createData.kind === "Forbidden" || createData.message) {
+                    console.error("D-ID Error: ", createData);
+                    return;
+                }
+
+                streamId = createData.id;
+                sessionId = createData.session_id;
+
+                // 2. Peer Connection
+                peerConnection = new RTCPeerConnection({ iceServers: createData.ice_servers });
+                peerConnection.addEventListener('icecandidate', async (event) => {
+                    if (event.candidate) {
+                        await fetch(`${BACKEND_URL}/api/did/ice/${streamId}`, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                candidate: event.candidate.candidate,
+                                sdpMid: event.candidate.sdpMid,
+                                sdpMLineIndex: event.candidate.sdpMLineIndex,
+                                session_id: sessionId
+                            })
+                        });
+                    }
+                });
+                peerConnection.addEventListener('track', (event) => {
+                    const video = document.getElementById('did-video');
+                    if (!video.srcObject) {
+                        video.srcObject = event.streams[0];
+                        video.onloadedmetadata = async () => {
+                            try {
+                                await video.play();
+                            } catch (e) {
+                                console.warn("Browser blocked sound. Falling back to muted autoplay to ensure avatar at least loads:", e);
+                                video.muted = true;
+                                await video.play();
+                            }
+                        };
+                    }
+                });
+
+                await peerConnection.setRemoteDescription(createData.offer);
+                const answer = await peerConnection.createAnswer();
+                await peerConnection.setLocalDescription(answer);
+
+                // 3. Start Stream
+                await fetch(`${BACKEND_URL}/api/did/start-stream/${streamId}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ answer: answer, session_id: sessionId })
+                });
+
+                isConnected = true;
+                isConnecting = false;
+                console.log("Avatar Online!");
+
+                // Signal to your React app that it is safe to send the presentation question!
+                window.parent.postMessage("AVATAR_READY", "*");
+            } catch (error) {
+                console.error("Connection failed: ", error);
+                isConnecting = false;
+            }
+        }
+
+        let recognition = null;
+        let isListening = false;
+        let isThinking = false;
+        let silenceTimer = null;
+        let finalTranscript = "";
+
+        // Toggles listening state when the user clicks the green/gray circle
+        function toggleListening() {
+            // Unmute the video on the very first user interaction!
+            const video = document.getElementById('did-video');
+            if (video && video.muted) video.muted = false;
+
+            if (isThinking) return; // Ignore clicks if AI is currently fetching an answer
+
+            if (isListening) {
+                // If already green/recording, click again to stop early
+                stopListening(true);
+            } else {
+                startListening();
+            }
+        }
+
+        function startListening() {
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            if (!SpeechRecognition) {
+                console.error("Speech Recognition not supported.");
+                return;
+            }
+
+            recognition = new SpeechRecognition();
+            // We omit recognition.lang to let the browser automatically recognize
+            // English or Hebrew depending on standard OS logic
+            recognition.continuous = true;
+            recognition.interimResults = true;
+            finalTranscript = "";
+
+            recognition.onstart = () => {
+                isListening = true;
+
+                // 1. Change circle border to green
+                document.getElementById("avatar-container").classList.add("recording");
+
+                // Auto-stop if perfectly silent for 5 seconds
+                clearTimeout(silenceTimer);
+                silenceTimer = setTimeout(() => {
+                    if (isListening) stopListening(true);
+                }, 5000);
+            };
+
+            recognition.onresult = (event) => {
+                let current = "";
+                for (let i = 0; i < event.results.length; i++) {
+                    current += event.results[i][0].transcript;
+                }
+                finalTranscript = current;
+
+                // Stop recording when user finishes their question (2.5 seconds of silence)
+                clearTimeout(silenceTimer);
+                silenceTimer = setTimeout(() => {
+                    if (isListening) stopListening(true);
+                }, 2500);
+            };
+
+            recognition.onerror = (e) => {
+                console.error("Mic error: ", e);
+                stopListening(false);
+            };
+
+            recognition.onend = () => {
+                // Clean up state
+                isListening = false;
+
+                // Revert circle border to disabled/gray
+                document.getElementById("avatar-container").classList.remove("recording");
+
+                if (finalTranscript.trim().length > 0) {
+                    askBot(finalTranscript.trim());
+                    finalTranscript = "";
+                }
+            };
+
+            recognition.start();
+        }
+
+        function stopListening(processInput = true) {
+            isListening = false;
+            clearTimeout(silenceTimer);
+            document.getElementById("avatar-container").classList.remove("recording");
+
+            if (recognition) recognition.stop();
+        }
+
+        // Auto-detect Language to choose the correct D-ID voice ID
+        function detectLanguage(text) {
+            // Checks if the string contains Hebrew characters
+            const hasHebrew = /[\u0590-\u05FF]/.test(text);
+            return hasHebrew ? 'he-IL' : 'en-US';
+        }
+
+        async function askBot(question) {
+            if (!question) return;
+            console.log(isThinking)
+            if (isThinking) {
+                console.warn("Blocked duplicate question because AI is currently processing: ", question);
+                return;
+            }
+            debugger
+            const video = document.getElementById('did-video');
+            if (video && video.paused) {
+                try {
+                    await video.play();
+                } catch (e) {
+                    video.muted = true;
+                    video.play().catch(err => console.error(err));
+                }
+            }
+
+            // Try to unmute AFTER it is confirmed playing
+            if (video && video.muted) {
+                video.muted = false;
+                // If Chrome instantly pauses it because it was unmuted without a user gesture...
+                if (video.paused) {
+                    video.muted = true;
+                    video.play().catch(e => { });
+                }
+            }
+
+            isThinking = true;
+            document.getElementById("avatar-container").classList.add("thinking");
+
+            try {
+                // 2. Automatically detect if the language spoken was English or Hebrew
+                const detectedLang = detectLanguage(question);
+
+                const response = await fetch(`${BACKEND_URL}/api/chat`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        message: question,
+                        language: detectedLang
+                    })
+                });
+
+                const data = await response.json();
+                console.log("AI Reply: ", data.reply);
+
+                if (streamId) {
+                    // 3. Reply and Speak accordingly
+                    const maleVoiceId = detectedLang === 'he-IL' ? 'he-IL-AvriNeural' : 'en-US-ChristopherNeural';
+
+                    const didRes = await fetch(`${BACKEND_URL}/api/did/talk/${streamId}`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            script: {
+                                type: 'text',
+                                input: data.reply,
+                                provider: { type: 'microsoft', voice_id: maleVoiceId }
+                            },
+                            session_id: sessionId
+                        })
+                    });
+
+                    const didData = await didRes.json();
+                    if (!didRes.ok || didData.kind === "SessionError") {
+                        console.error("D-ID Stream Error", didData);
+                        streamId = null;
+
+                        // Fallback speech mechanism
+                        const utterance = new SpeechSynthesisUtterance(data.reply);
+                        utterance.lang = detectedLang;
+                        window.speechSynthesis.speak(utterance);
+                    }
+                }
+            } catch (err) {
+                console.error(err);
+            }
+
+            isThinking = false;
+            document.getElementById("avatar-container").classList.remove("thinking");
+        }
+
+        window.addEventListener('beforeunload', () => {
+            if (streamId && sessionId) {
+                fetch(`${BACKEND_URL}/api/did/stream/${streamId}`, {
+                    method: 'DELETE',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ session_id: sessionId }),
+                    keepalive: true
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>
