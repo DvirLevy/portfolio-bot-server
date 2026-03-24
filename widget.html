@@ -38,10 +38,6 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            object-position: center 20%;
-            /* Focus on the upper face area */
-            transform: scale(1.6);
-            /* Zoom dramatically to mimic D-ID's face crop */
             position: absolute;
             top: 0;
             left: 0;
@@ -321,7 +317,7 @@
                 console.warn("Blocked duplicate question because AI is currently processing: ", question);
                 return;
             }
-            debugger
+
             const video = document.getElementById('did-video');
             if (video && video.paused) {
                 try {

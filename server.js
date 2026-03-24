@@ -1,30 +1,46 @@
-import express from 'express';
-import cors from 'cors';
-import dotenv from 'dotenv';
-import apiIndexRoute from './Router/apiIndexRoute.js';
+import express from "express";
+import cors from "cors";
+import dotenv from "dotenv";
+import apiRoute from "./Router/apiRoute.js";
+import path from "path";
+import { fileURLToPath } from "url";
+import { limiter } from "./services/rateLimiter.js";
+import { logger } from "./services/logger.js";
+import morgan from "morgan";
 
-const envFile = process.env.NODE_ENV === 'production' ? '.env.production' : '.env.development';
-dotenv.config({ path: envFile, override: true });
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 8000;
 
-app.use(cors({
-    origin: '*',
-    credentials: true,
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['*']
+// HTTP request logging
+app.use(morgan("tiny", {
+  stream: { write: (message) => logger.info(message.trim()) }
 }));
 
+// Apply the rate limiting middleware to all requests
+app.use(limiter);
+
+app.use(cors({ origin: "*" }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use('/api', apiIndexRoute);
+// Serve the widget.html and dvir.png so the iframe can load them securely from the same port!
+app.use(express.static(__dirname));
 
-app.get('/health', (req, res) => {
-    res.json({ status: 'ok' });
+app.use("/api", apiRoute);
+
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "widget.html"));
+});
+
+app.get("/health", (req, res) => {
+  res.json({ status: "ok" });
 });
 
 app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+  logger.info(`server running on port ${PORT}`);
 });
