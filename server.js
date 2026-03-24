@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-import apiRoute from "./Router/apiRoute.js";
+import apiRoute from "./Router/apiIndexRoute.js";
 import path from "path";
 import { fileURLToPath } from "url";
 import { limiter } from "./services/rateLimiter.js";
@@ -33,14 +33,14 @@ app.use(express.static(__dirname));
 
 app.use("/api", apiRoute);
 
-app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "widget.html"));
-});
+// app.get("/", (req, res) => {
+//   res.sendFile(path.join(__dirname, "widget.html"));
+// });
 
 app.get("/health", (req, res) => {
   res.json({ status: "ok" });
 });
 
 app.listen(PORT, () => {
-  logger.info(`server running on port ${PORT}`);
+  logger.info(`Server is running on http://localhost:${PORT}`);
 });

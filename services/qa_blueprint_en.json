@@ -48,6 +48,10 @@
         "answer": "You can email me at dvirlh1@gmail.com, or call my Israeli number at 054-266-3619."
     },
     {
+        "question": "Where can I see your automation reports?",
+        "answer": "You can click the 'Last Run Report' button right here in the portfolio! Since Dvir deploys his projects to GitHub Pages, the latest test results are always public and viewable there."
+    },
+    {
         "personal_info": [
             {
                 "question": "Who are you?",

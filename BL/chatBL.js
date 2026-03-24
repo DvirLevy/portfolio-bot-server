@@ -1,12 +1,13 @@
 import { OpenAI } from 'openai';
 import { getSystemPrompt } from '../services/prompts.js';
+import { logger } from '../services/logger.js';
 
 export const chatWithAvatar = async (req, res) => {
     if (!process.env.OPENAI_API_KEY) {
+        logger.error('OpenAI API key is missing.');
         return res.status(500).json({ detail: 'OpenAI API key is missing.' });
     }
     
-    // Instantiate dynamically so it doesn't fail if env vars aren't loaded at import time
     const openai = new OpenAI({
         apiKey: process.env.OPENAI_API_KEY
     });
@@ -20,7 +21,7 @@ export const chatWithAvatar = async (req, res) => {
                 { role: 'system', content: getSystemPrompt(language) },
                 { role: 'user', content: message }
             ],
-            max_tokens: 150,
+            max_tokens: 75,
             temperature: 0.7
         });
         
@@ -28,6 +29,8 @@ export const chatWithAvatar = async (req, res) => {
         res.json({ reply: answer });
     } catch (e) {
         const errorMessage = e instanceof Error ? e.message : String(e);
+        logger.error('OpenAI Error:', { message: errorMessage, stack: e.stack });
+
         if (errorMessage.includes('insufficient_quota') || errorMessage.includes('429')) {
             const mockAnswer = 'I am so sorry! My OpenAI account ran out of credits. However, you can hear that my speech and web setup are working perfectly fine!';
             return res.json({ reply: mockAnswer });
