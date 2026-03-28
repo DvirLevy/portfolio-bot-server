@@ -7,7 +7,10 @@
   "scripts": {
     "start": "cross-env NODE_ENV=production node server.js",
     "dev": "cross-env NODE_ENV=development nodemon server.js",
-    "build": "echo 'No build step required. Server runs directly.'"
+    "build": "echo 'No build step required. Server runs directly.'",
+    "db": "docker-compose -f docker/docker-compose-rag-db.yml up -d",
+    "close-db": "docker-compose -f docker/docker-compose-rag-db.yml down",
+    "connect-db": "docker exec -it rag-postgres psql -U postgres -d rag_db"
   },
   "dependencies": {
     "cors": "^2.8.5",
@@ -16,6 +19,7 @@
     "express-rate-limit": "^8.3.1",
     "morgan": "^1.10.1",
     "openai": "^4.80.1",
+    "pg": "^8.20.0",
     "winston": "^3.19.0"
   },
   "devDependencies": {
