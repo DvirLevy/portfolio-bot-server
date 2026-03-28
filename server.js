@@ -11,10 +11,19 @@ import morgan from "morgan";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-dotenv.config();
+// dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 8000;
+app.set("trust proxy", 1);
+
+const environment = process.env.NODE_ENV || 'development'
+const envFile = `.env.${environment}`;
+console.log(`Loading environment from ${envFile}`)
+dotenv.config({ path: path.resolve(__dirname, envFile) });
+
+
+
+const PORT = process.env.PORT
 
 // HTTP request logging
 app.use(morgan("tiny", {
@@ -41,6 +50,6 @@ app.get("/health", (req, res) => {
   res.json({ status: "ok" });
 });
 
-app.listen(PORT, () => {
+app.listen(PORT, "0.0.0.0", () => {
   logger.info(`Server is running on http://localhost:${PORT}`);
 });

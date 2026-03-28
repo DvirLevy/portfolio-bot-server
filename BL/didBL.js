@@ -72,16 +72,19 @@ export const createStream = async (req, res) => {
     }
 
     try {
+        /* 
         // Automatic Stream Cleanup: delete the previous session if it exists
+        // REMOVED: This causes race conditions in React Strict Mode and multi-user interference.
+        // The client-side useWebRTC hook now manages its own lifecycle.
         const lastSession = sessionManager.getLastSession();
         if (lastSession && lastSession.stream_id) {
             logger.info("Auto-cleaning last D-ID session:", lastSession.stream_id);
-            // We pass session_id if we have it, although D-ID might not always need it for a "force" delete
             await deleteStreamInternal(lastSession.stream_id, { session_id: lastSession.session_id }).catch(err => {
                 logger.warn("Failed to auto-clean old session (might be already gone):", err.message);
             });
             sessionManager.clearLastSession();
         }
+        */
 
         let finalUrl = source_url;
 
