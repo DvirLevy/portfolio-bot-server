@@ -18,10 +18,10 @@ let qaBlueprintHe = "[]";
 let qaBlueprintEn = "[]";
 
 try {
-    qaBlueprintHe = fs.readFileSync(path.join(__dirname, "qa_blueprint_he.json"), "utf-8");
-    qaBlueprintEn = fs.readFileSync(path.join(__dirname, "qa_blueprint_en.json"), "utf-8");
+  qaBlueprintHe = fs.readFileSync(path.join(__dirname, "qa_blueprint_he.json"), "utf-8");
+  qaBlueprintEn = fs.readFileSync(path.join(__dirname, "qa_blueprint_en.json"), "utf-8");
 } catch (err) {
-    console.error("Failed to load QA blueprints", err);
+  console.error("Failed to load QA blueprints", err);
 }
 
 export function getSystemPrompt(language) {

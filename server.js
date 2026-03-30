@@ -15,20 +15,20 @@ const __dirname = path.dirname(__filename);
 
 const app = express();
 app.set("trust proxy", 1);
+// HTTP request logging
+app.use(morgan("tiny", {
+  stream: { write: (message) => logger.info(message.trim()) }
+}));
 
 const environment = process.env.NODE_ENV || 'development'
 const envFile = `.env.${environment}`;
-console.log(`Loading environment from ${envFile}`)
+logger.info(`Loading environment from ${envFile}`)
 dotenv.config({ path: path.resolve(__dirname, envFile) });
 
 
 
 const PORT = process.env.PORT
 
-// HTTP request logging
-app.use(morgan("tiny", {
-  stream: { write: (message) => logger.info(message.trim()) }
-}));
 
 // Apply the rate limiting middleware to all requests
 app.use(limiter);

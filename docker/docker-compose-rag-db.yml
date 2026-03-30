@@ -1,0 +1,25 @@
+name: create-rag-db
+
+version: '3.8'
+
+services:
+  postgres:
+    image: ankane/pgvector
+    container_name: rag-postgres
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: rag_db
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
+
+  #to connect to the db run: docker exec -it rag-postgres psql -U postgres -d rag_db
+  #to run the db run: docker-compose -f docker/docker-compose.yml up -d
+  #to stop the db run: docker-compose -f docker/docker-compose.yml down
+  #to restart the db run: docker-compose -f docker/docker-compose.yml restart
