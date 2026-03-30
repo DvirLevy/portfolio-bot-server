@@ -22,7 +22,7 @@ app.use(morgan("tiny", {
 
 const environment = process.env.NODE_ENV || 'development'
 const envFile = `.env.${environment}`;
-logger.log(`Loading environment from ${envFile}`)
+logger.info(`Loading environment from ${envFile}`)
 dotenv.config({ path: path.resolve(__dirname, envFile) });
 
 
