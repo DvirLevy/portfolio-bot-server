@@ -42,7 +42,7 @@ async function makeDIDRequest(url, method, bodyJSON) {
 // Uploads a local image to D-ID
 async function uploadImage(filePath) {
     logger.info('Uploading local image to D-ID:', filePath);
-    
+
     const fileBuffer = fs.readFileSync(filePath);
     const blob = new Blob([fileBuffer], { type: 'image/png' });
     const formData = new FormData();
@@ -60,7 +60,7 @@ async function uploadImage(filePath) {
     if (!response.ok) {
         throw new Error(`D-ID Image Upload Error: ${data.description || data.message || JSON.stringify(data)}`);
     }
-    
+
     logger.info('D-ID Image Upload SUCCESS:', data.url);
     return data.url;
 }
@@ -113,12 +113,12 @@ export const createStream = async (req, res) => {
 
         logger.info('Creating D-ID stream with final URL:', { finalUrl });
         const data = await makeDIDRequest('https://api.d-id.com/talks/streams', 'POST', { source_url: finalUrl });
-        
+
         // Save this as the 'last' session for future cleanup
         if (data.id) {
             sessionManager.saveLastSession(data.id, data.session_id);
         }
-        
+
         res.json(data);
     } catch (error) {
         logger.error(error.message, { stack: error.stack, originalError: error.response });
@@ -148,14 +148,48 @@ export const handleIce = async (req, res) => {
 
 export const handleTalk = async (req, res) => {
     try {
-        const body = { 
+        const textInput = (req.body?.script?.input || "").trim();
+        const isHebrew = /[\u0590-\u05FF]/.test(textInput);
+
+        // Sanitize text to remove common speech-interfering characters
+        const sanitizedText = textInput
+            .replace(/[*_~`]/g, '') // Remove markdown decorators
+            .replace(/[#]/g, '')     // Remove hash signs
+            .trim();
+
+        // Force high-quality English voice
+        const maleVoiceId = "en-US-AndrewNeural";
+        
+        logger.info(`D-ID Talk Request. InputLength: ${sanitizedText.length}. Voice: ${maleVoiceId}`);
+
+        const body = {
             ...req.body,
-            config: { 
+            script: {
+                ...req.body.script,
+                input: sanitizedText,
+                provider: {
+                    type: "microsoft",
+                    voice_id: maleVoiceId
+                }
+            },
+            config: {
                 ...(req.body.config || {}),
-                fluent: true 
+                fluent: true,
+                stitch: false, // Disabling stitch reduces the processing delay significantly for long texts
+                driver_expressions: {
+                    expressions: [
+                        {
+                            start_frame: 0,
+                            expression: "happy", // 'happy', 'serious', 'surprised'
+                            intensity: 0.5
+                        }
+                    ]
+                }
+
             }
         };
         const data = await makeDIDRequest(`https://api.d-id.com/talks/streams/${req.params.stream_id}`, 'POST', body);
+        logger.info(`D-ID Talk SUCCESS. ID: ${data.id}. Status: ${data.status}`);
         res.json(data);
     } catch (error) {
         logger.error(error.message, { stack: error.stack, originalError: error.response });

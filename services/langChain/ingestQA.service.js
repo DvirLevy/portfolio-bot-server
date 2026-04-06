@@ -1,29 +1,28 @@
 import { RecursiveCharacterTextSplitter } from "@langchain/textsplitters";
+import { Document } from "@langchain/core/documents";
 import { getVectorStore } from "../../utils/vector-store.js";
 import { logger } from "../logger.js";
 
-export async function ingest({ text, documentId, metadata = {} }) {
-    text = text.toLowerCase();
+export async function ingestQA(qnaData) {
     const splitter = new RecursiveCharacterTextSplitter({
         chunkSize: 1000,
         chunkOverlap: 200,
     });
 
-    const docs = await splitter.createDocuments(
-        [text],
-        [{ documentId, ...metadata }]
-    );
+    const texts = qnaData.map(qna => qna.text);
+    const metadatas = qnaData.map(qna => ({ documentId: qna.documentId, ...qna.metadata }));
+
+    const docs = await splitter.createDocuments(texts, metadatas);
 
     const vectorStore = await getVectorStore();
     await vectorStore.addDocuments(docs);
 
-    logger.info("Document ingested successfully", {
-        documentId,
+    logger.info("Documents ingested successfully", {
         chunkCount: docs.length,
     });
 
     return {
-        documentId,
+        // documentId,
         chunkCount: docs.length,
     };
 }

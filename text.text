@@ -1,0 +1,6 @@
+commands:
+pm2 start npm --name "portfolio-bot-server" -- start
+
+pm2 start /usr/local/bin/ngrok --name ngrok -- http 3000
+
+ssh -i portfolio-key.pem ec2-user@13.60.200.178

@@ -1,261 +1,257 @@
 [
     {
         "question": "Who are you?",
-        "answer": "I'm Dvir's A-I avatar assistant, you can ask me anything about him!"
+        "answer": "I'm Dvir's AI avatar assistant! I am here to tell you all about Dvir's experience as an AI Software Engineer and answer any questions you have about his skills."
     },
     {
-        "question": "What is your main role and expertise?",
-        "answer": "I am a Senior Automation Engineer. I leverage my development and testing skills to specialize in designing E2E test automation frameworks with Playwright, performance testing, and building internal tools using React and Node.js."
+        "question": "What is Dvir's main role and expertise?",
+        "answer": "Dvir is an AI Software Engineer who bridges the critical gap between robust backend infrastructure and modern artificial intelligence. He specializes in designing scalable cloud architectures, intelligent agentic workflows with LangChain, and advanced E2E automation frameworks using Playwright and Node.js."
     },
     {
-        "question": "Where do you currently work or what do you do at Jifiti?",
-        "answer": "I am currently a Senior Automation Engineer at Jifiti! I architected our entire Playwright automation framework from scratch. I own the quality for our strategic Merchant systems and I recently led the system validation during a massive migration to Kubernetes. I also build our load tests using JMeter."
+        "question": "Where does Dvir currently work or what does he do at Jifiti?",
+        "answer": "Dvir is currently a Software Engineer at Jifiti! He architected an entire Playwright automation framework from scratch and owns the system quality for strategic Merchant applications. He also recently led the system validation during a massive architectural migration from ECS to Kubernetes."
     },
     {
-        "question": "Tell me about your time at Moovit.",
-        "answer": "I spent nearly four years at Moovit! I actually started as a Senior QA Automation Engineer, but my coding skills got me promoted to a Tools Developer. I built full-stack internal desktop apps for our Developers and QA teams using React, Node.js, and Electron, and I led the QA on massive integrations like the Braze marketing platform."
+        "question": "Tell me about Dvir's time at Moovit.",
+        "answer": "Dvir spent nearly four years at Moovit as a Tools Developer and Backend Engineer. He architected full-stack internal desktop monitoring applications and system observability pipelines from scratch using React, Node.js, and Electron, allowing developers to seamlessly handle massive backend integrations."
     },
     {
-        "question": "What did you do at ironSource?",
-        "answer": "I worked at ironSource from 2018 to 2020 as a QA Automation Engineer. I developed automation scripts to programmatically interact with the browser DOM, handled API testing with Postman, tracked network traffic using Charles and Fiddler, and heavily worked with AWS services like CloudFront and S3."
+        "question": "What did Dvir do at ironSource?",
+        "answer": "Dvir worked at ironSource from 2018 to 2020. He developed scripts to programmatically interact with browser DOMs, handled extensive API testing, tracked network logic, and began heavily utilizing AWS services like CloudFront and S3."
     },
     {
-        "question": "Tell me about your experience at Moveo.",
-        "answer": "Moveo was where I started out from 2017 to 2018 as a QA Engineer. I performed deep functional and integration testing, ran validation checks on SQL and NoSQL databases, and analyzed mobile application logs using Android Studio and Xcode."
+        "question": "Tell me about Dvir's experience at Moveo.",
+        "answer": "From 2017 to 2018 at Moveo, Dvir performed deep functional and integration testing, running validation checks on both SQL and NoSQL databases, giving him the strong data foundation he uses today."
     },
     {
-        "question": "What automation tools and frameworks are you experienced with?",
-        "answer": "My primary weapon of choice is Playwright. But I also have immense experience with CI/CD pipelines, Docker, Azure DevOps, Jenkins, API testing, and writing severe load and performance tests with JMeter."
+        "question": "What automation tools and AI frameworks is Dvir experienced with?",
+        "answer": "For AI, Dvir leverages LangChain, OpenAI, and the Model Context Protocol (MCP). For infrastructure and automation, he holds deep expertise in Playwright, Docker, Azure DevOps, Jenkins, Kubernetes, and heavy load testing with JMeter."
     },
     {
-        "question": "What are your main programming languages and development technologies?",
-        "answer": "I write heavily in TypeScript and JavaScript. On the frontend I use React and Vite, and on the backend I use Node.js and Express. For infrastructure, I am very comfortable with AWS, Docker, and Kubernetes."
+        "question": "What are Dvir's main programming languages and development technologies?",
+        "answer": "Dvir writes heavily in TypeScript and Node.js. On the frontend, he uses React and Vite to build data-driven UIs. On the backend, he builds with Node.js and integrates seamlessly with AWS, pgvector databases, and Kubernetes."
     },
     {
-        "question": "Do you have any certifications or formal education?",
-        "answer": "Absolutely. I hold independent certifications in ECMAScript 6+ and Web Security for User Authentication. I also completed comprehensive courses in Full Stack Development, Web QA, and Mobile QA at SVCollege."
+        "question": "Does Dvir have any certifications or formal education?",
+        "answer": "Absolutely. Dvir holds independent certifications in ECMAScript 6+ and Web Security for User Authentication. He also completed comprehensive training in Full Stack Development"
     },
     {
-        "question": "Do you have volunteer experience?",
-        "answer": "Yes! I strongly believe in giving back, and I have volunteered my skills as a Frontend Developer to help build community projects."
+        "question": "Does Dvir have volunteer experience?",
+        "answer": "Yes! Dvir strongly believes in giving back. He volunteered as a Frontend Developer for Code for Israel, building highly responsive Next.js and React components for community projects."
     },
     {
-        "question": "Where can I see your projects?",
-        "answer": "You can check out my personal projects, React templates, and testing infrastructure code on my GitHub repository at github.com/DvirLevy."
+        "question": "Where can I see Dvir's projects?",
+        "answer": "You can check out his AI assistants, React applications, and complex infrastructure code on his GitHub repository at github.com/DvirLevy."
     },
     {
-        "question": "How can I contact you?",
-        "answer": "You can email me at dvirlh1@gmail.com, or call my Israeli number at 054-266-3619."
+        "question": "How can I contact Dvir?",
+        "answer": "You can email him directly at dvirlh1@gmail.com, or call his Israeli number at 054-266-3619. He would love to chat about AI Engineering"
     },
     {
-        "question": "Where can I see your automation reports?",
-        "answer": "You can click the 'Last Run Report' button right here in the portfolio! Since Dvir deploys his projects to GitHub Pages, the latest test results are always public and viewable there."
+        "question": "Where can I see Dvir's automation reports?",
+        "answer": "You can click the 'Last Run Report' button right here in the portfolio! Dvir deploys his automation suites via GitHub Actions, meaning the latest live test results are completely public and verifiable."
     },
     {
         "personal_info": [
             {
-                "question": "Who are you?",
-                "answer": "I'm Dvir Levy, an Automation Engineer and Full-Stack Developer specializing in building scalable test infrastructures, DevOps pipelines, and modern web applications."
+                "question": "Who is Dvir?",
+                "answer": "Dvir Levy is an AI Software Engineer and Full-Stack Developer specializing in building scalable AI systems, DevOps pipelines, and robust backend architectures."
             },
             {
-                "question": "What is your current role?",
-                "answer": "I currently work as an Automation Engineer, focusing on building end-to-end testing frameworks, CI/CD pipelines, and cloud-based automation solutions."
+                "question": "What is Dvir's current overarching focus?",
+                "answer": "Dvir is currently focused on building advanced AI toolchains, intelligent RAG architectures, and cloud-driven system solutions that seamlessly integrate with DevOps pipelines."
             },
             {
-                "question": "What makes you unique as an engineer?",
-                "answer": "I combine strong automation expertise with frontend and DevOps skills. I don't just write tests—I build complete automation ecosystems, including infrastructure, pipelines, and developer tools."
+                "question": "What makes Dvir unique as an engineer?",
+                "answer": "Dvir combines deep backend infrastructure and automation expertise with cutting-edge AI skills. He doesn't just prompt an LLM—he builds the complete ecosystem around it, ensuring the AI systems are secure, scalable, and production-ready."
             }
         ],
         "experience": [
             {
-                "question": "Where have you worked?",
-                "answer": "I have worked at companies like Jifiti and Moovit, where I focused on automation, infrastructure, and developer productivity."
+                "question": "Where has Dvir worked?",
+                "answer": "Dvir has engineered tools and infrastructure at companies like Jifiti, Moovit, and ironSource, building systems that scale for millions of users."
             },
             {
-                "question": "What did you do at Moovit?",
-                "answer": "At Moovit, I developed internal tools to improve developer efficiency, including an Electron-based application that replaced a costly .NET solution and streamlined access to AWS logs."
+                "question": "What did Dvir do at Moovit?",
+                "answer": "At Moovit, Dvir developed internal tools to supercharge developer productivity, including an Electron-based React application that replaced a legacy .NET system and streamlined access to AWS EC2 logs."
             },
             {
-                "question": "What is your experience at Jifiti?",
-                "answer": "At Jifiti, I focus on automation infrastructure, building scalable Playwright frameworks, integrating with CI/CD pipelines, and working with cloud services like AWS."
+                "question": "What is Dvir's experience at Jifiti?",
+                "answer": "At Jifiti, Dvir handles critical automation infrastructure, building robust Playwright frameworks, integrating them into complex CI/CD pipelines, and validating major Kubernetes migrations."
             },
             {
-                "question": "Have you worked on production systems?",
-                "answer": "Yes, I’ve worked on production-grade systems, including automation pipelines, cloud infrastructure, and testing frameworks used in real-world fintech environments."
+                "question": "Has Dvir worked on production systems?",
+                "answer": "Yes, Dvir has spent years building and safeguarding production-grade systems, from massive fintech automation pipelines to scalable cloud workflows."
             }
         ],
         "automation": [
             {
-                "question": "What automation tools do you use?",
-                "answer": "I primarily use Playwright with TypeScript, but I also have experience with Selenium and Cypress."
+                "question": "What automation tools does Dvir use?",
+                "answer": "Dvir primarily architects systems using Playwright and TypeScript, but he also builds intelligent autonomous testing agents using the Model Context Protocol (MCP)."
             },
             {
-                "question": "How do you design a test automation framework?",
-                "answer": "I design frameworks using a modular architecture with Page Object Model, reusable components, environment-based configuration, and strong separation of concerns."
+                "question": "How does Dvir design a framework?",
+                "answer": "Dvir designs frameworks using modular architectures, data access layers (DAL), environment-based scaling, and AI-driven validation checks."
             },
             {
-                "question": "How do you ensure test stability?",
-                "answer": "I focus on reliable locators, proper waiting strategies, retry mechanisms, and isolating flaky tests. I also use logging and reporting to quickly debug failures."
+                "question": "How does Dvir ensure test stability?",
+                "answer": "He focuses on intelligent waiting strategies, strict isolation, and pipeline retry mechanisms. He also implements heavy observability to catch flakes before they enter production."
             },
             {
-                "question": "Do you test APIs as well?",
-                "answer": "Yes, I integrate API testing alongside UI tests using Playwright and custom utilities, ensuring full end-to-end coverage."
+                "question": "Does Dvir test APIs as well?",
+                "answer": "Yes, Dvir builds comprehensive API validation networks using Playwright and custom Node.js utilities to ensure microservice endpoints are rock solid."
             },
             {
-                "question": "How do you handle test data?",
-                "answer": "I use dynamic test data generation, database utilities, and environment-specific configurations to ensure tests are isolated and repeatable."
+                "question": "How does Dvir handle test data?",
+                "answer": "Dvir leverages dynamic test data generation and isolated staging databases to ensure every execution runs in a pristine state."
             }
         ],
         "devops": [
             {
-                "question": "What DevOps tools do you use?",
-                "answer": "I work with GitHub Actions, Jenkins, Docker, Kubernetes, and AWS services like Lambda, S3, CloudWatch, and API Gateway."
+                "question": "What DevOps tools does Dvir use?",
+                "answer": "Dvir is dangerous with GitHub Actions, Jenkins, Docker, Kubernetes, and heavy AWS services like Lambda, S3, API Gateway, and CloudWatch."
             },
             {
-                "question": "How do you integrate tests into CI/CD?",
-                "answer": "I build pipelines that trigger tests automatically on pull requests and deployments, including parallel execution, artifact uploads, and reporting dashboards."
+                "question": "How does Dvir handle CI/CD?",
+                "answer": "Dvir builds GitHub Actions and Azure workflows that trigger testing, validation, and AI agent checks instantly upon pull requests or deployment events."
             },
             {
-                "question": "Have you worked with cloud infrastructure?",
-                "answer": "Yes, I have hands-on experience with AWS, including Lambda functions, S3 storage, CloudWatch logging, and infrastructure design."
+                "question": "Has Dvir worked with cloud infrastructure?",
+                "answer": "Yes, Dvir heavily utilizes AWS. He builds serverless applications utilizing Lambda functions triggered by API Gateway, connecting them to secure VPC environments."
             },
             {
-                "question": "Can you describe a DevOps project you built?",
-                "answer": "I built a system where automation tests are triggered via AWS Lambda, executed through GitHub Actions pipelines, and deployed using Kubernetes configurations."
+                "question": "Can you describe a DevOps project Dvir built?",
+                "answer": "Dvir built an entirely serverless cloud-driven system where automation execution and AI reporting are triggered natively via AWS Lambda and deployed through Kubernetes."
             }
         ],
         "frontend": [
             {
-                "question": "Do you have frontend experience?",
-                "answer": "Yes, I build modern web applications using React, TypeScript, Vite, and Tailwind CSS."
+                "question": "Does Dvir have frontend experience?",
+                "answer": "Absolutely. Dvir builds beautiful, data-rich frontend applications using React, Next.js, Vite, and Tailwind CSS."
             },
             {
-                "question": "What kind of frontend projects have you built?",
-                "answer": "I built a personal portfolio with interactive automation triggers, real-time integrations, and a full CI/CD pipeline."
+                "question": "What kind of frontend projects has Dvir built?",
+                "answer": "Aside from this highly interactive AI portfolio, Dvir has built advanced UI dashboards for developers to monitor system logs and query complex Redshift data."
             },
             {
-                "question": "How do you integrate frontend with automation?",
-                "answer": "I create UI elements that trigger backend automation workflows, allowing users to run tests directly from the interface."
+                "question": "How does Dvir integrate frontend with automation?",
+                "answer": "Dvir builds interactive UI widgets that connect directly to cloud APIs, triggering remote GitHub Action pipelines and streaming the results back to the user instantly."
             }
         ],
         "projects": [
             {
-                "question": "Can I run your automation?",
-                "answer": "Yes! You can trigger automation directly from my portfolio. It runs through cloud infrastructure and CI pipelines and returns real test results."
+                "question": "Can I test Dvir's automation right now?",
+                "answer": "Yes! You can trigger actual automation tests directly from his portfolio. It sends a request to AWS Lambda, spins up a CI pipeline, and returns the real result back to you."
             },
             {
-                "question": "What is your most impressive project?",
-                "answer": "My portfolio automation system, where users can trigger real tests that run through AWS Lambda, GitHub Actions, and Kubernetes pipelines."
+                "question": "What is Dvir's most impressive project?",
+                "answer": "Building me! I am an AI Portfolio Assistant engineered using RAG architecture, LangChain, and a pgvector database to give me long-term memory over Dvir's history."
             },
             {
-                "question": "Do you have experience with real-time systems?",
-                "answer": "Yes, I’ve built systems that interact with live environments, including logging systems and cloud-triggered automation flows."
+                "question": "Does Dvir experience with real-time systems?",
+                "answer": "Yes, Dvir has built systems that stream real-time logs from EC2 servers and interactive AI applications that stream responses via WebRTC."
             }
         ],
         "testing_strategy": [
             {
-                "question": "How do you approach testing?",
-                "answer": "I follow a balanced testing strategy that includes sanity, functional, integration, and error-handling tests."
+                "question": "How does Dvir approach system quality?",
+                "answer": "Dvir approaches quality like an engineer: by building safety nets of integration, API, and E2E tests so developers can ship code faster without fear."
             },
             {
-                "question": "What is your testing philosophy?",
-                "answer": "Automation should provide fast feedback, be reliable, and integrate seamlessly into the development lifecycle."
+                "question": "What is Dvir's engineering philosophy?",
+                "answer": "Systems should be self-healing, infrastructure should be codified, and AI should be used to augment human productivity in meaningful, reliable ways."
             },
             {
-                "question": "How do you handle failures in production?",
-                "answer": "I ensure failures are logged, monitored, and trigger alerts via observability tools like CloudWatch or dashboards."
+                "question": "How does Dvir handle production failures?",
+                "answer": "Dvir relies on strict observability, utilizing tools like Coralogix and CloudWatch to trigger immediate alerts and trace distributed system errors before users notice."
             }
         ],
         "advanced": [
             {
-                "question": "Do you build tools or just tests?",
-                "answer": "I build tools. My focus is on creating automation platforms, not just writing test scripts."
+                "question": "Does Dvir build tools or just write scripts?",
+                "answer": "Dvir is a Tool Builder. He creates complex automation platforms, AI workflow agents, and internal desktop apps, not just basic test scripts."
             },
             {
-                "question": "How do you improve developer productivity?",
-                "answer": "By creating internal tools, automation pipelines, and reducing manual work through smart integrations."
+                "question": "How does Dvir improve developer productivity?",
+                "answer": "By eliminating bottlenecks. Whether it's building an Electron app to easily fetch logs, or an AI agent to validate schemas, Dvir automates the manual work away."
             },
             {
-                "question": "Do you work with microservices?",
-                "answer": "Yes, I design testing strategies for microservices, including API validation, contract testing, and end-to-end flows."
+                "question": "Does Dvir work with microservices?",
+                "answer": "Yes, Dvir architects solutions heavily tailored for microservices, ensuring inter-service contracts are validated and end-to-end flows remain intact."
             }
         ],
         "soft_skills": [
             {
-                "question": "How do you work with teams?",
-                "answer": "I collaborate closely with developers, product managers, and DevOps teams to ensure quality across the entire development lifecycle."
+                "question": "How does Dvir work within a team?",
+                "answer": "Dvir is deeply collaborative. He works closely with DevOps engineers, developers, and product managers to ensure the entire execution lifecycle is flawless."
             },
             {
-                "question": "How do you learn new technologies?",
-                "answer": "I learn by building real projects, experimenting with new tools, and integrating them into practical use cases."
+                "question": "How does Dvir learn new AI technologies?",
+                "answer": "Dvir learns by building. He immediately implements new tools—like vector databases or the Model Context Protocol—into real-world, scalable projects."
             }
         ],
         "future": [
             {
-                "question": "What are you looking for next?",
-                "answer": "I'm looking for a role where I can build advanced automation infrastructures, work with modern technologies, and have a strong impact on product quality and engineering processes."
+                "question": "What is Dvir looking for next?",
+                "answer": "Dvir is looking to join a forward-thinking company as an AI Software Engineer, where he can leverage his robust backend and DevOps expertise to build scalable, intelligent AI systems that drive serious impact."
             }
         ]
     },
     {
         "projects": [
             {
-                "question": "Can you tell me about your portfolio automation project?",
-                "answer": "One of my most advanced projects is my portfolio automation system. Users can trigger real automation tests directly from the UI. The system uses AWS Lambda to trigger GitHub Actions pipelines, which execute Playwright tests inside a Kubernetes-based environment. The results are then returned and displayed to the user. This project demonstrates my ability to build end-to-end automation infrastructure, combining frontend, backend, DevOps, and cloud technologies.",
+                "question": "Can you tell me about the AI Portfolio Assistant?",
+                "answer": "Dvir engineered me! I am an AI RAG (Retrieval-Augmented Generation) system built using LangChain and Node.js. Dvir wired me up to a PostgreSQL database powered by the 'pgvector' extension so that I can semantically search his portfolio data. It demonstrates his ability to securely implement enterprise-grade AI.",
                 "technologies": [
-                    "Playwright",
-                    "TypeScript",
-                    "React",
-                    "AWS Lambda",
-                    "S3",
-                    "CloudWatch",
-                    "GitHub Actions",
-                    "Kubernetes",
-                    "Docker"
+                    "LangChain",
+                    "Node.js",
+                    "PostgreSQL",
+                    "pgvector",
+                    "OpenAI",
+                    "RAG"
                 ]
             },
             {
-                "question": "What is your Live Logs project?",
-                "answer": "The Live Logs project is a real-time log streaming system that allows users to view logs directly from AWS EC2 instances. The application connects to remote servers and streams logs live to the user’s machine. It dynamically adapts to the user’s operating system by executing commands through Terminal (Unix-based) or CMD (Windows). The system is wrapped in a desktop application built with Electron.js, providing a seamless developer experience. This project demonstrates my ability to work with low-level system operations, cross-platform environments, and real-time data streaming.",
+                "question": "What is the Live Logs / EC2 Logger project?",
+                "answer": "Dvir built a real-time log streaming desktop application at Moovit. It connects directly to AWS EC2 instances, bypassing the need for manual SSH sessions. Wrapped in Electron.js and React, it drastically improved the troubleshooting efficiency of the entire engineering team.",
                 "technologies": [
                     "AWS EC2",
                     "Node.js",
-                    "Electron.js",
+                    "Electron",
                     "React",
                     "Vite",
-                    "OS-based command execution",
-                    "Terminal / CMD integration",
                     "Real-time streaming"
                 ],
-                "challenge": "Handled cross-platform differences between Windows and Unix-based systems while maintaining a unified interface for log streaming.",
-                "impact": "Enabled developers to access and debug logs from remote servers in real time without manual SSH sessions, significantly improving troubleshooting efficiency."
+                "challenge": "Handled cross-platform execution environments while securely bridging access to internal AWS networks.",
+                "impact": "Saved hundreds of engineering hours by giving developers instant, safe access to distributed system logs."
             },
             {
-                "question": "Tell me about your API automation project for Whalo.",
-                "answer": "I built a full API automation solution for Whalo, focusing on validating business flows and backend logic. The project includes structured test scenarios, validation layers, and error handling. It demonstrates my ability to design automation for microservices-based architectures and ensure backend reliability.",
-                "technologies": [
-                    "Playwright API Testing",
-                    "TypeScript",
-                    "REST APIs",
-                    "JSON validation",
-                    "Test architecture design"
-                ]
-            },
-            {
-                "question": "Have you built automation frameworks from scratch?",
-                "answer": "Yes. At Jifiti, I led a migration from an existing solution to Playwright and built a full automation framework from scratch. The framework included multiple architecture layers such as DAL (Data Access Layer), DB utilities, environment configuration management, and reusable helpers. It was designed to be scalable, maintainable, and easy for teams to extend.",
+                "question": "Tell me about Dvir's API validation system.",
+                "answer": "Dvir architected a serverless API automation flow. Using AWS Lambda and API Gateway, he triggers GitHub Actions workflows that execute intensive Playwright API tests in the cloud, reporting the results back natively. It acts as an autonomous guardian for microservice reliability.",
                 "technologies": [
                     "Playwright",
-                    "TypeScript",
-                    "DAL architecture",
-                    "Database utilities",
-                    "Environment configuration",
-                    "CI/CD integration"
+                    "AWS Lambda",
+                    "API Gateway",
+                    "GitHub Actions",
+                    "Kubernetes",
+                    "Node.js"
                 ]
             },
             {
-                "question": "What makes your automation projects stand out?",
-                "answer": "My projects go beyond writing test cases. I build full automation ecosystems that include infrastructure, CI/CD pipelines, cloud integrations, and developer tools. I focus on scalability, reliability, and real-world production use."
+                "question": "Has Dvir built AI systems from scratch?",
+                "answer": "Yes. Dvir is currently pioneering Cloud-Driven End-to-End systems that are controlled by AI Agents utilizing the Model Context Protocol (MCP). Instead of hardcoding all test scenarios, he builds autonomous architectures that can intelligently validate system states.",
+                "technologies": [
+                    "AI Agents",
+                    "MCP",
+                    "LangChain",
+                    "Playwright",
+                    "TypeScript",
+                    "Cloud Architecture"
+                ]
+            },
+            {
+                "question": "What makes Dvir's projects stand out?",
+                "answer": "Dvir goes far beyond the MVP. He builds full, production-ready ecosystems. Whether it's an AI RAG system with a vector database, or an internal infrastructure tool, Dvir ensures it is scalable, observable, and directly solves business bottlenecks."
             }
         ]
     }
