@@ -88,18 +88,30 @@ export const createStream = async (req, res) => {
 
         let finalUrl = source_url;
 
-        // Local Upload Handling (No Caching as per user request)
+        // Local Upload Handling: Be smarter about finding the image on different environments (EC2 vs Local)
         if (source_url && !source_url.startsWith('http') && !source_url.startsWith('s3://')) {
-            const localPath = path.join(__dirname, '../../dvir-portfolio/src/assets', source_url);
-            if (fs.existsSync(localPath)) {
+            const possiblePaths = [
+                path.join(__dirname, '../../dvir-portfolio/src/assets', source_url),
+                path.join(__dirname, '../../dvir-portfolio/public', source_url),
+                path.join(__dirname, '../public', source_url),
+                path.join(__dirname, '../', source_url),
+                path.join(process.cwd(), 'public', source_url),
+                path.join(process.cwd(), source_url)
+            ];
+
+            let localPath = null;
+            for (const p of possiblePaths) {
+                if (fs.existsSync(p)) {
+                    localPath = p;
+                    break;
+                }
+            }
+
+            if (localPath) {
+                logger.info('Found local image, uploading to D-ID:', localPath);
                 finalUrl = await uploadImage(localPath);
             } else {
-                const backendPath = path.join(__dirname, '../', source_url);
-                if (fs.existsSync(backendPath)) {
-                    finalUrl = await uploadImage(backendPath);
-                } else {
-                    logger.warn('Local image not found, using original source_url:', source_url);
-                }
+                logger.warn('Local image not found in any known locations, using original source_url:', source_url);
             }
         }
 
