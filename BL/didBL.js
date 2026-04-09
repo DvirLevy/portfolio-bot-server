@@ -71,10 +71,8 @@ export const createStream = async (req, res) => {
     }
 
     try {
-        /* 
         // Automatic Stream Cleanup: delete the previous session if it exists
-        // REMOVED: This causes race conditions in React Strict Mode and multi-user interference.
-        // The client-side useWebRTC hook now manages its own lifecycle.
+        // This helps mitigate 403 "Max sessions" errors when clients fail to cleanup.
         const lastSession = sessionManager.getLastSession();
         if (lastSession && lastSession.stream_id) {
             logger.info("Auto-cleaning last D-ID session:", lastSession.stream_id);
@@ -83,7 +81,6 @@ export const createStream = async (req, res) => {
             });
             sessionManager.clearLastSession();
         }
-        */
 
         let finalUrl = source_url;
 
