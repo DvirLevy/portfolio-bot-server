@@ -47,9 +47,8 @@ export const logger = winston.createLogger({
   ],
 });
 
-// If we're not in production then log to the `console` with colored format
-if (process.env.NODE_ENV !== "production") {
-  logger.add(new winston.transports.Console({
-    format: consoleFormat,
-  }));
-}
+// Always log to the `console` to ensure visibility in production logs (e.g. Docker/Cloud logs)
+logger.add(new winston.transports.Console({
+  format: consoleFormat,
+}));
+
