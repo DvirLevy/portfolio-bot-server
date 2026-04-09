@@ -8,26 +8,35 @@ const __dirname = path.dirname(__filename);
 const SESSION_FILE = path.join(__dirname, '../logs/last_session.json');
 
 /**
- * Gets the last saved session info.
+ * Gets the list of saved sessions.
  */
-export function getLastSession() {
+export function getRecentSessions() {
     try {
         if (fs.existsSync(SESSION_FILE)) {
             const data = fs.readFileSync(SESSION_FILE, 'utf8');
-            return JSON.parse(data);
+            const parsed = JSON.parse(data);
+            return Array.isArray(parsed) ? parsed : [parsed];
         }
     } catch (error) {
-        logger.warn("Could not read last session file:", error.message);
+        logger.warn("Could not read sessions file:", error.message);
     }
-    return null;
+    return [];
 }
 
 /**
- * Saves the current session info as the 'last' session.
+ * Saves a new session to the list of recent sessions.
  */
 export function saveLastSession(stream_id, session_id) {
     try {
-        const data = JSON.stringify({ stream_id, session_id }, null, 2);
+        const sessions = getRecentSessions();
+        // Keep only top 10 unique sessions
+        const newSessions = [{ stream_id, session_id }, ...sessions]
+            .filter((s, index, self) => 
+                index === self.findIndex((t) => t.stream_id === s.stream_id)
+            )
+            .slice(0, 10);
+
+        const data = JSON.stringify(newSessions, null, 2);
         const dir = path.dirname(SESSION_FILE);
         if (!fs.existsSync(dir)) {
             fs.mkdirSync(dir, { recursive: true });
@@ -39,14 +48,14 @@ export function saveLastSession(stream_id, session_id) {
 }
 
 /**
- * Clears the last session info.
+ * Clears the session list.
  */
 export function clearLastSession() {
     try {
         if (fs.existsSync(SESSION_FILE)) {
-            fs.unlinkSync(SESSION_FILE);
+            fs.writeFileSync(SESSION_FILE, '[]');
         }
     } catch (error) {
-        logger.error("Failed to clear last session:", error.message);
+        logger.error("Failed to clear sessions:", error.message);
     }
 }

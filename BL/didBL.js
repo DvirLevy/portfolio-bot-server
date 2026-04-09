@@ -71,14 +71,18 @@ export const createStream = async (req, res) => {
     }
 
     try {
-        // Automatic Stream Cleanup: delete the previous session if it exists
-        // This helps mitigate 403 "Max sessions" errors when clients fail to cleanup.
-        const lastSession = sessionManager.getLastSession();
-        if (lastSession && lastSession.stream_id) {
-            logger.info("Auto-cleaning last D-ID session:", lastSession.stream_id);
-            await deleteStreamInternal(lastSession.stream_id, { session_id: lastSession.session_id }).catch(err => {
-                logger.warn("Failed to auto-clean old session (might be already gone):", err.message);
-            });
+        // Automatic Stream Cleanup: delete any recent sessions if they exist
+        // This helps mitigate 403 "Max sessions" errors by clearing ghosts.
+        const recentSessions = sessionManager.getRecentSessions();
+        if (recentSessions.length > 0) {
+            logger.info("Auto-cleaning recent D-ID sessions:", recentSessions.length);
+            for (const session of recentSessions) {
+                if (session.stream_id) {
+                    await deleteStreamInternal(session.stream_id, { session_id: session.session_id }).catch(err => {
+                        logger.warn(`Failed to cleanup session ${session.stream_id}:`, err.message);
+                    });
+                }
+            }
             sessionManager.clearLastSession();
         }
 
