@@ -2,7 +2,6 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { logger } from '../services/logger.js';
-import * as imageCache from '../services/imageCache.js';
 import * as sessionManager from '../services/sessionManager.js';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -88,25 +87,17 @@ export const createStream = async (req, res) => {
 
         let finalUrl = source_url;
 
-        // Image Caching and Local Upload Handling
+        // Local Upload Handling (No Caching as per user request)
         if (source_url && !source_url.startsWith('http') && !source_url.startsWith('s3://')) {
-            const cachedUrl = imageCache.getCachedUrl(source_url);
-            if (cachedUrl) {
-                logger.info('Reusing cached D-ID URL for:', source_url);
-                finalUrl = cachedUrl;
+            const localPath = path.join(__dirname, '../../dvir-portfolio/src/assets', source_url);
+            if (fs.existsSync(localPath)) {
+                finalUrl = await uploadImage(localPath);
             } else {
-                const localPath = path.join(__dirname, '../../dvir-portfolio/src/assets', source_url);
-                if (fs.existsSync(localPath)) {
-                    finalUrl = await uploadImage(localPath);
-                    imageCache.setCachedUrl(source_url, finalUrl);
+                const backendPath = path.join(__dirname, '../', source_url);
+                if (fs.existsSync(backendPath)) {
+                    finalUrl = await uploadImage(backendPath);
                 } else {
-                    const backendPath = path.join(__dirname, '../', source_url);
-                    if (fs.existsSync(backendPath)) {
-                        finalUrl = await uploadImage(backendPath);
-                        imageCache.setCachedUrl(source_url, finalUrl);
-                    } else {
-                        logger.warn('Local image not found, using original source_url:', source_url);
-                    }
+                    logger.warn('Local image not found, using original source_url:', source_url);
                 }
             }
         }
