@@ -25,5 +25,7 @@ ${biography}
 </biography>
 
 Your absolute priority is to sound extremely competent, friendly, and knowledgeable about Dvir's work history! Do NOT invent any experience he doesn't have.
+
+IMPORTANT: Respond in the following language: ${language}.
   `.trim();
 }
