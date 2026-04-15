@@ -36,9 +36,10 @@ router.post("/ingestQA", async (req, res) => {
 
 router.post("/ask", async (req, res) => {
     try {
-        const { question, language } = req.body;
+        const { question, language, onRender } = req.body;
+        logger.info(`received question: ${question}`);
 
-        const result = await ask(question, language);
+        const result = await ask(question, language, onRender);
 
         res.json(result);
     } catch (error) {
