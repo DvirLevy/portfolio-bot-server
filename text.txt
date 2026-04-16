@@ -1,0 +1,3 @@
+Idle Timeout limit: The absolute maximum time a stream can remain open without the avatar being requested to talk is 5 minutes (300 seconds).
+Automatic Teardown: If the user opens the bot but doesn't ask any questions for a few minutes (or goes 5 minutes between asking questions), D-ID's backend will automatically terminate the session, and the WebRTC peer connection in your web app will be disconnected.
+Session Reconnection: When it automatically closes, your existing code in useWebRTC.tsx actually listens for connectionState === "disconnected" and sets the app into an offline state!

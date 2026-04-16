@@ -38,31 +38,7 @@ async function makeDIDRequest(url, method, bodyJSON) {
     return data;
 }
 
-// Uploads a local image to D-ID
-async function uploadImage(filePath) {
-    logger.info('Uploading local image to D-ID:', filePath);
 
-    const fileBuffer = fs.readFileSync(filePath);
-    const blob = new Blob([fileBuffer], { type: 'image/png' });
-    const formData = new FormData();
-    formData.append('image', blob, path.basename(filePath));
-
-    const response = await fetch('https://api.d-id.com/images', {
-        method: 'POST',
-        headers: {
-            ...getDidAuthHeaders()
-        },
-        body: formData
-    });
-
-    const data = await response.json();
-    if (!response.ok) {
-        throw new Error(`D-ID Image Upload Error: ${data.description || data.message || JSON.stringify(data)}`);
-    }
-
-    logger.info('D-ID Image Upload SUCCESS:', data.url);
-    return data.url;
-}
 
 export const createStream = async (req, res) => {
     const { source_url } = req.body;
@@ -88,35 +64,11 @@ export const createStream = async (req, res) => {
 
         let finalUrl = source_url;
 
-        // Local Upload Handling: Be smarter about finding the image on different environments (EC2 vs Local)
-        if (source_url && !source_url.startsWith('http') && !source_url.startsWith('s3://')) {
-            const possiblePaths = [
-                path.join(__dirname, '../../dvir-portfolio/src/assets', source_url),
-                path.join(__dirname, '../../dvir-portfolio/public', source_url),
-                path.join(__dirname, '../public', source_url),
-                path.join(__dirname, '../', source_url),
-                path.join(process.cwd(), 'public', source_url),
-                path.join(process.cwd(), source_url)
-            ];
 
-            let localPath = null;
-            for (const p of possiblePaths) {
-                if (fs.existsSync(p)) {
-                    localPath = p;
-                    break;
-                }
-            }
-
-            if (localPath) {
-                logger.info('Found local image, uploading to D-ID:', localPath);
-                finalUrl = await uploadImage(localPath);
-            } else {
-                logger.warn('Local image not found in any known locations, using original source_url:', source_url);
-            }
-        }
 
         logger.info('Creating D-ID stream with final URL:', { finalUrl });
         const data = await makeDIDRequest('https://api.d-id.com/talks/streams', 'POST', { source_url: finalUrl });
+
 
         // Save this as the 'last' session for future cleanup
         if (data.id) {
@@ -159,11 +111,13 @@ export const handleTalk = async (req, res) => {
         const sanitizedText = textInput
             .replace(/[*_~`]/g, '') // Remove markdown decorators
             .replace(/[#]/g, '')     // Remove hash signs
+            .replace(/\n/g, ' ')     // Replace newlines with spaces
+            .replace(/\s+/g, ' ')    // Replace multiple spaces with a single space
             .trim();
 
-        // Force high-quality English voice
-        const maleVoiceId = "en-US-AndrewNeural";
-        
+        // High-quality voice selection based on language
+        const maleVoiceId = isHebrew ? "he-IL-AvriNeural" : "en-US-AndrewNeural";
+
         logger.info(`D-ID Talk Request. InputLength: ${sanitizedText.length}. Voice: ${maleVoiceId}`);
 
         const body = {

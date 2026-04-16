@@ -42,10 +42,6 @@ app.use(express.static(__dirname));
 
 app.use("/api", apiRoute);
 
-// app.get("/", (req, res) => {
-//   res.sendFile(path.join(__dirname, "widget.html"));
-// });
-
 app.get("/health", (req, res) => {
   res.json({ status: "ok" });
 });
