@@ -6,7 +6,7 @@ const embeddings = new OpenAIEmbeddings({
     apiKey: process.env.OPENAI_API_KEY,
 });
 
-export async function getVectorStore() {
+export async function getVectorStore(tableName) {
     return await PGVectorStore.initialize(embeddings, {
         postgresConnectionOptions: {
             host: process.env.DB_HOST || "localhost",
@@ -15,7 +15,7 @@ export async function getVectorStore() {
             password: process.env.DB_PASSWORD || "postgres",
             database: process.env.DB_NAME || "rag_db",
         },
-        tableName: "DvirResume",
+        tableName: tableName,
         columns: {
             idColumnName: "id",
             vectorColumnName: "embedding",

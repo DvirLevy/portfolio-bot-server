@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { logger } from '../services/logger.js';
+import { logger } from '../utils/logger.js';
 import * as sessionManager from '../services/sessionManager.js';
 
 const __filename = fileURLToPath(import.meta.url);

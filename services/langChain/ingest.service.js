@@ -1,6 +1,6 @@
 import { RecursiveCharacterTextSplitter } from "@langchain/textsplitters";
 import { getVectorStore } from "../../utils/vector-store.js";
-import { logger } from "../logger.js";
+import { logger } from "../../utils/logger.js";
 
 export async function ingest({ text, documentId, metadata = {} }) {
     text = text.toLowerCase();
@@ -14,7 +14,7 @@ export async function ingest({ text, documentId, metadata = {} }) {
         [{ documentId, ...metadata }]
     );
 
-    const vectorStore = await getVectorStore();
+    const vectorStore = await getVectorStore("DvirResume");
     await vectorStore.addDocuments(docs);
 
     logger.info("Document ingested successfully", {
