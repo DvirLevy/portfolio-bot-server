@@ -12,8 +12,6 @@ import { askForCompany } from "./askForCompany.service.js";
  * @returns {Promise<object>} - response the RAG pipeline answer
  */
 export async function askOrchestrator(question, language = "en-US", onRender = false) {
-    let response = {}
-    let relevantDocs = []
 
     if (onRender) {
         return {
