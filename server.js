@@ -5,7 +5,7 @@ import apiRoute from "./Router/apiIndexRoute.js";
 import path from "path";
 import { fileURLToPath } from "url";
 import { limiter } from "./services/rateLimiter.js";
-import { logger } from "./services/logger.js";
+import { logger } from "./utils/logger.js";
 import morgan from "morgan";
 
 const __filename = fileURLToPath(import.meta.url);

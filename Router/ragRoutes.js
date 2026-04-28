@@ -1,9 +1,13 @@
 import express from "express";
 import { ingest } from "../services/langChain/ingest.service.js";
-import { ask } from "../services/langChain/ask.service.js";
+import { askOrchestrator } from "../services/langChain/ask/askOrchestrator.service.js";
 import { ingestQA } from "../services/langChain/ingestQA.service.js";
-import { logger } from "../services/logger.js";
+import { logger } from "../utils/logger.js";
+import companyRoutes from "./companyRoutes.js";
 const router = express.Router();
+
+router.use('/company', companyRoutes);
+
 
 router.post("/ingest", async (req, res) => {
     try {
@@ -39,7 +43,7 @@ router.post("/ask", async (req, res) => {
         const { question, language, onRender } = req.body;
         logger.info(`received question: ${question}`);
 
-        const result = await ask(question, language, onRender);
+        const result = await askOrchestrator(question, language, onRender);
 
         res.json(result);
     } catch (error) {
@@ -47,5 +51,6 @@ router.post("/ask", async (req, res) => {
         res.status(500).json({ error: "Ask failed" });
     }
 });
+
 
 export default router;

@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { logger } from './logger.js';
+import { logger } from '../utils/logger.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -31,7 +31,7 @@ export function saveLastSession(stream_id, session_id) {
         const sessions = getRecentSessions();
         // Keep only top 10 unique sessions
         const newSessions = [{ stream_id, session_id }, ...sessions]
-            .filter((s, index, self) => 
+            .filter((s, index, self) =>
                 index === self.findIndex((t) => t.stream_id === s.stream_id)
             )
             .slice(0, 10);
