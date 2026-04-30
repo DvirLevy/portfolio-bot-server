@@ -41,7 +41,7 @@ router.post("/ingestQA", async (req, res) => {
 router.post("/ask", async (req, res) => {
     try {
         const { question, language, onRender } = req.body;
-        logger.info(`received question: ${question}`);
+        logger.info(`\x1b[36m$received question: ${question}\x1b[0m`);
 
         const result = await askOrchestrator(question, language, onRender);
 

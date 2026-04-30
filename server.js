@@ -13,7 +13,7 @@ const __dirname = path.dirname(__filename);
 
 const app = express();
 app.set("trust proxy", 1);
-app.use(morgan(':remote-addr - :method :url :status :res[content-length] - :response-time ms - ":user-agent"', {
+app.use(morgan(':remote-addr - :method :url :status :res[content-length] - :response-time ms - \x1b[33m":user-agent"\x1b[0m', {
   stream: { write: (message) => logger.info(message.trim()) }
 }));
 
