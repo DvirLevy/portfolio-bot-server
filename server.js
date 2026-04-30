@@ -13,7 +13,7 @@ const __dirname = path.dirname(__filename);
 
 const app = express();
 app.set("trust proxy", 1);
-app.use(morgan("tiny", {
+app.use(morgan(":remote-addr - :method :url :status :res[content-length] - :response-time ms", {
   stream: { write: (message) => logger.info(message.trim()) }
 }));
 
@@ -30,7 +30,7 @@ const PORT = process.env.PORT
 
 app.use(limiter);
 
-app.use(cors({ origin: "*" }));
+app.use(cors({ origin: ["https://dvir-levy.netlify.app", "http://localhost:8080"], }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
