@@ -16,7 +16,7 @@ export async function askOrchestrator(question, language = "en-US", onRender = f
 
     if (onRender) {
         const TIMEOUT = 3000
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
             logger.info(`onRender timeout ${TIMEOUT}ms`);
             setTimeout(() => {
                 resolve({
