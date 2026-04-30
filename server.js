@@ -22,6 +22,7 @@ const envFile = `.env.${environment}`;
 logger.info(`Loading environment from ${envFile}`)
 dotenv.config({ path: path.resolve(__dirname, envFile) });
 
+///for deployement
 
 
 const PORT = process.env.PORT
