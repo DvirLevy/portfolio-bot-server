@@ -16,11 +16,11 @@ jobs:
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
-            cd /home/ec2-user/portfolio-bot-server
+            cd /home/ec2-user/portfolio-bot
             git fetch origin
             git reset --hard origin/main
 
-            npm ci
+            npm ci 
 
             pm2 restart ecosystem.config.cjs --env production
             pm2 save

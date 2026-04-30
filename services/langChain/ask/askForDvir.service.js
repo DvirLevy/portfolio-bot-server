@@ -11,6 +11,8 @@ import prompts from "../../prompts.js";
  */
 export async function askForDvirResume(question, language = "en-US", retriever) {
     const openAI = new OpenAI(0).model;
+    let relevantDocs = [];
+    let response = {}
     //translate the question before invoke
     if (!language.startsWith("en")) {
         const translationResponse = await openAI.invoke([
