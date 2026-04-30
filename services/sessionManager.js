@@ -15,6 +15,7 @@ export function getRecentSessions() {
         if (fs.existsSync(SESSION_FILE)) {
             const data = fs.readFileSync(SESSION_FILE, 'utf8');
             const parsed = JSON.parse(data);
+            logger.info("recent sessions file:", parsed);
             return Array.isArray(parsed) ? parsed : [parsed];
         }
     } catch (error) {
@@ -42,6 +43,7 @@ export function saveLastSession(stream_id, session_id) {
             fs.mkdirSync(dir, { recursive: true });
         }
         fs.writeFileSync(SESSION_FILE, data);
+        logger.info("Saving new sessions file: ", { newSessions, session_id });
     } catch (error) {
         logger.error("Failed to save last session:", error.message);
     }
@@ -53,6 +55,7 @@ export function saveLastSession(stream_id, session_id) {
 export function clearLastSession() {
     try {
         if (fs.existsSync(SESSION_FILE)) {
+            logger.info("cleared sessions file ", { SESSION_FILE });
             fs.writeFileSync(SESSION_FILE, '[]');
         }
     } catch (error) {
