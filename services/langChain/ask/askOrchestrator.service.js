@@ -20,7 +20,7 @@ export async function askOrchestrator(question, language = "en-US", onRender = f
             logger.info(`onRender timeout ${TIMEOUT}ms`);
             setTimeout(() => {
                 resolve({
-                    reply: "Hi, I'm Dvir's AI assistant. His most advanced AI project. Dvir is an AI software engineer specializing in LLM, Rag systems, and scalable AI architectures. He builds AI systems end-to-end, from retrieval pipelines and vector databases to backend services and cloud infrastructure. Dvir designed and developed a full Rag-based system. Look at me, I'm powered by a vector database, running on AWS with EC2, Docker, Postgres, and Nginx. Dvir combines strong backend engineering with AI expertise to deliver production-ready solutions. Ask me anything to explore what he can build.",
+                    reply: "Hi, I'm Dvir's AI assistant. His most advanced AI project. Dvir is an AI software engineer specializing in LLM, Rag systems, and scalable AI architectures, from retrieval pipelines and vector databases to backend services and cloud infrastructure. ask me anything about him",
                     // reply: "היי, אני העוזר AI של דביר. דביר הוא מהנדס בינה מלאכותית, עם שלוש שנות ניסיון כמפתח תוכנה, מתמחה ב-LLM, מערכות Rag, וארכיטקטורות AI סקלביליות. דביר בונה מערכות בינה מלאכותית מקצה לקצה. תראו אותי! אני הפרוייקט הכי מתקדם שלו, אני תוצר פיתוח של מערכת שלמה מבוססת Rag, עם תשתיות ענן, מאגר מידע ווקטורי פוסטגרס, docker, AWS, EC2, N-ginx. אתם יכולים לשאול אותי כל דבר עליו.",
                     relevantDocs: ["overrided"],
                     language: 'en-US'
