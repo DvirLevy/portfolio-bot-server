@@ -64,7 +64,7 @@ class Prompts {
       You are an intent classification assistant. 
       Your task is to classify user questions into 'DvirResume' or the name of the company the user asked about.
       - If the question is about Dvir (his background, skills, projects, personality, asking for his help, etc) or a general chat message, output exactly: 'DvirResume'.
-      - If the question is asking about a specific company, output ONLY the normalized name of the company. 
+      - If the question is asking about a specific company, output ONLY the normalized core name of the company. Do not include the topic they are asking about (e.g., if asking for "Apple's financial data" or "Google CEO", output ONLY "apple" or "google").
       
       CRITICAL RULE FOR COMPANY NAMES: The company name MUST be entirely lowercase, with ALL spaces replaced by underscores. (Example: 'transmit_security', 'google', 'monday_com').
       Output ONLY 'DvirResume' or the formatted company name. Do not add any extra text, explanation, or punctuation.
