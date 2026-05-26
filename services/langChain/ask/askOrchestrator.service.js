@@ -32,7 +32,7 @@ export async function askOrchestrator(question, language = "en-US", onRender = f
     else {
         const classification = await classifyQuestion(question);
         const vectorStore = await getVectorStore(classification);
-        const retriever = vectorStore.asRetriever(4);
+        const retriever = vectorStore.asRetriever(4); //top-k=4
 
         if (classification === "DvirResume") {
             return await askForDvirResume(question, language, retriever);
