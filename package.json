@@ -12,7 +12,8 @@
     "close-db": "docker-compose -f docker/docker-compose-rag-db.yml down",
     "connect-db": "docker exec -it rag-postgres psql -U postgres -d rag_db",
     "ingest": "ts-node services/langChain/test-scripts/inget-test.ts",
-    "ask": "ts-node services/langChain/test-scripts/ask-test.ts"
+    "ask": "ts-node services/langChain/test-scripts/ask-test.ts",
+    "test": "cross-env NODE_OPTIONS=--experimental-vm-modules jest"
   },
   "dependencies": {
     "@langchain/community": "^1.1.25",
@@ -31,6 +32,7 @@
   },
   "devDependencies": {
     "cross-env": "^10.1.0",
+    "jest": "^30.4.2",
     "nodemon": "^3.1.14"
   },
   "nodemonConfig": {

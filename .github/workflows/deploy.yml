@@ -5,7 +5,45 @@ on:
     branches: [main]
 
 jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run tests
+        id: run_tests
+        run: npm test
+
+      - name: Email on test failure
+        if: failure() && steps.run_tests.outcome == 'failure'
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          username: ${{ secrets.MAIL_USERNAME }}
+          password: ${{ secrets.MAIL_PASSWORD }}
+          subject: "Deployment blocked: tests failed on ${{ github.repository }}"
+          to: dvirlh1@gmail.com
+          from: "Portfolio Bot CI <${{ secrets.MAIL_USERNAME }}>"
+          body: |
+            Tests failed for commit ${{ github.sha }} on branch ${{ github.ref_name }}, so the deployment to EC2 was skipped.
+
+            Commit: ${{ github.event.head_commit.message }}
+            Author: ${{ github.event.head_commit.author.name }}
+            Run logs: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+
   deploy:
+    needs: test
     runs-on: ubuntu-latest
 
     steps:
@@ -22,7 +60,7 @@ jobs:
             git fetch origin
             git reset --hard origin/main
 
-            npm ci 
+            npm ci
 
             pm2 restart ecosystem.config.cjs --env production
             pm2 save

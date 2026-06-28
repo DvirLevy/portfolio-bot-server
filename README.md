@@ -14,3 +14,14 @@ The server is structured into the following layers:
   - `didBL.js`: Handles fetching and communicating with D-ID's streaming API.
 - **`services/`**: Holds configuration and context logic, such as `prompts.js` and JSON files for the Q&A blueprint.
 
+## CI/CD
+
+Pushes to `main` trigger `.github/workflows/deploy.yml`, which runs in two jobs:
+1. **test**: installs dependencies and runs `npm test`. On failure, an email is sent via Gmail SMTP and the deploy job is skipped.
+2. **deploy**: only runs if `test` passes; SSHes into the EC2 instance, pulls `main`, and restarts the app with `pm2`.
+
+Required GitHub Actions secrets:
+- `EC2_HOST`, `EC2_USER`, `EC2_SSH_KEY` — SSH access to the deployment server.
+- `MAIL_USERNAME` — Gmail address used to send failure notifications.
+- `MAIL_PASSWORD` — a Gmail [App Password](https://myaccount.google.com/apppasswords) (requires 2FA), not the regular account password.
+
