@@ -17,7 +17,7 @@ The server is structured into the following layers:
 ## CI/CD
 
 Pushes to `main` trigger `.github/workflows/deploy.yml`, which runs in two jobs:
-1. **test**: installs dependencies and runs `npm test`. On failure, an email is sent via Gmail SMTP and the deploy job is skipped.
+1. **test**: installs dependencies and runs `npm test`. An email is sent via Gmail SMTP either way: on failure the deploy job is skipped, on success the deploy proceeds.
 2. **deploy**: only runs if `test` passes; SSHes into the EC2 instance, pulls `main`, and restarts the app with `pm2`.
 
 Required GitHub Actions secrets:
