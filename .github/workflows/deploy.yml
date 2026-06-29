@@ -32,15 +32,48 @@ jobs:
           server_port: 465
           username: ${{ secrets.MAIL_USERNAME }}
           password: ${{ secrets.MAIL_PASSWORD }}
-          subject: "Deployment blocked: tests failed on ${{ github.repository }}"
+          subject: "❌ Deployment blocked: tests failed on ${{ github.repository }}"
           to: dvirlh1@gmail.com
-          from: "Portfolio Bot CI <${{ secrets.MAIL_USERNAME }}>"
-          body: |
-            Tests failed for commit ${{ github.sha }} on branch ${{ github.ref_name }}, so the deployment to EC2 was skipped.
-
-            Commit: ${{ github.event.head_commit.message }}
-            Author: ${{ github.event.head_commit.author.name }}
-            Run logs: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          from: "Portfolio Bot Server CI <${{ secrets.MAIL_USERNAME }}>"
+          html_body: |
+            <div style="font-family: Segoe UI, Arial, sans-serif; max-width: 560px; margin: 0 auto; background:#f4f6f8; padding: 24px;">
+              <div style="background:#ffffff; border-radius: 10px; overflow:hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.08);">
+                <div style="background:#d93025; padding: 20px 28px;">
+                  <h1 style="margin:0; color:#ffffff; font-size:20px;">❌ Tests Failed</h1>
+                  <p style="margin:4px 0 0; color:#ffe8e6; font-size:13px;">Deployment to EC2 was skipped</p>
+                </div>
+                <div style="padding: 24px 28px;">
+                  <table style="width:100%; font-size:14px; color:#202124; border-collapse: collapse;">
+                    <tr>
+                      <td style="padding:6px 0; color:#5f6368; width:110px;">Repository</td>
+                      <td style="padding:6px 0;"><strong>${{ github.repository }}</strong></td>
+                    </tr>
+                    <tr>
+                      <td style="padding:6px 0; color:#5f6368;">Branch</td>
+                      <td style="padding:6px 0;">${{ github.ref_name }}</td>
+                    </tr>
+                    <tr>
+                      <td style="padding:6px 0; color:#5f6368;">Commit</td>
+                      <td style="padding:6px 0;"><code style="background:#f1f3f4; padding:2px 6px; border-radius:4px;">${{ github.sha }}</code></td>
+                    </tr>
+                    <tr>
+                      <td style="padding:6px 0; color:#5f6368;">Message</td>
+                      <td style="padding:6px 0;">${{ github.event.head_commit.message }}</td>
+                    </tr>
+                    <tr>
+                      <td style="padding:6px 0; color:#5f6368;">Author</td>
+                      <td style="padding:6px 0;">${{ github.event.head_commit.author.name }}</td>
+                    </tr>
+                  </table>
+                  <div style="margin-top: 22px; text-align:center;">
+                    <a href="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+                       style="display:inline-block; background:#d93025; color:#ffffff; text-decoration:none; padding:10px 20px; border-radius:6px; font-size:14px; font-weight:600;">
+                      View Run Logs
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
 
       - name: Email on test success
         if: success() && steps.run_tests.outcome == 'success'
@@ -50,15 +83,48 @@ jobs:
           server_port: 465
           username: ${{ secrets.MAIL_USERNAME }}
           password: ${{ secrets.MAIL_PASSWORD }}
-          subject: "Tests passed on ${{ github.repository }} - deploying"
+          subject: "✅ Tests passed on ${{ github.repository }} - deploying"
           to: dvirlh1@gmail.com
-          from: "Portfolio Bot CI <${{ secrets.MAIL_USERNAME }}>"
-          body: |
-            Tests passed for commit ${{ github.sha }} on branch ${{ github.ref_name }}. Deployment to EC2 will proceed.
-
-            Commit: ${{ github.event.head_commit.message }}
-            Author: ${{ github.event.head_commit.author.name }}
-            Run logs: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          from: "Portfolio Bot Server CI <${{ secrets.MAIL_USERNAME }}>"
+          html_body: |
+            <div style="font-family: Segoe UI, Arial, sans-serif; max-width: 560px; margin: 0 auto; background:#f4f6f8; padding: 24px;">
+              <div style="background:#ffffff; border-radius: 10px; overflow:hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.08);">
+                <div style="background:#188038; padding: 20px 28px;">
+                  <h1 style="margin:0; color:#ffffff; font-size:20px;">✅ Tests Passed</h1>
+                  <p style="margin:4px 0 0; color:#e6f4ea; font-size:13px;">Deployment to EC2 is proceeding</p>
+                </div>
+                <div style="padding: 24px 28px;">
+                  <table style="width:100%; font-size:14px; color:#202124; border-collapse: collapse;">
+                    <tr>
+                      <td style="padding:6px 0; color:#5f6368; width:110px;">Repository</td>
+                      <td style="padding:6px 0;"><strong>${{ github.repository }}</strong></td>
+                    </tr>
+                    <tr>
+                      <td style="padding:6px 0; color:#5f6368;">Branch</td>
+                      <td style="padding:6px 0;">${{ github.ref_name }}</td>
+                    </tr>
+                    <tr>
+                      <td style="padding:6px 0; color:#5f6368;">Commit</td>
+                      <td style="padding:6px 0;"><code style="background:#f1f3f4; padding:2px 6px; border-radius:4px;">${{ github.sha }}</code></td>
+                    </tr>
+                    <tr>
+                      <td style="padding:6px 0; color:#5f6368;">Message</td>
+                      <td style="padding:6px 0;">${{ github.event.head_commit.message }}</td>
+                    </tr>
+                    <tr>
+                      <td style="padding:6px 0; color:#5f6368;">Author</td>
+                      <td style="padding:6px 0;">${{ github.event.head_commit.author.name }}</td>
+                    </tr>
+                  </table>
+                  <div style="margin-top: 22px; text-align:center;">
+                    <a href="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+                       style="display:inline-block; background:#188038; color:#ffffff; text-decoration:none; padding:10px 20px; border-radius:6px; font-size:14px; font-weight:600;">
+                      View Run Logs
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
 
   deploy:
     needs: test
