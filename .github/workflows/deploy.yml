@@ -96,7 +96,7 @@ jobs:
                 <div style="padding: 24px 28px;">
                   <table style="width:100%; font-size:14px; color:#202124; border-collapse: collapse;">
                     <tr>
-                      <td style="padding:6px 0; color:#5f6368; width:110px;">Repository</td>
+                      <td style="padding:6px 0; color:#5f6368; width:110px;">Repository </td>
                       <td style="padding:6px 0;"><strong>${{ github.repository }}</strong></td>
                     </tr>
                     <tr>
