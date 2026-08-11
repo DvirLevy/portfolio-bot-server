@@ -30,7 +30,7 @@ const PORT = process.env.PORT
 
 app.use(limiter);
 logger.info("Server memory stats:\n", { memory: process.memoryUsage(),  });
-app.use(cors({ origin: ["https://dvir-levy.netlify.app"], }));
+app.use(cors({ origin: ["https://dvir-levy.netlify.app", "https://dvir-levy.dev", "https://wwww.dvir-levy.dev"], }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
