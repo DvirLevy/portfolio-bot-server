@@ -34,8 +34,6 @@ app.use(cors({ origin: ["https://dvir-levy.netlify.app", "https://dvir-levy.dev"
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use(express.static(__dirname));
-
 app.use("/api", apiRoute);
 
 app.get("/health", (req, res) => {
