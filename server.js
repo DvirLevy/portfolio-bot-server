@@ -7,6 +7,7 @@ import { fileURLToPath } from "url";
 import { limiter } from "./services/rateLimiter.js";
 import { logger } from "./utils/logger.js";
 import morgan from "morgan";
+import { resetStaleProcessingScans } from "./db/repositories/scannedDocs.repository.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -42,4 +43,14 @@ app.get("/health", (req, res) => {
 
 app.listen(PORT, "0.0.0.0", () => {
   logger.info(`Server is running on http://localhost:${PORT}`);
+
+  // Mitigates YL scan rows stuck in 'processing' after a pm2 restart mid-scan.
+  // Runs after dotenv has loaded and the server is listening, so YL_DB_* is populated.
+  resetStaleProcessingScans().then((count) => {
+    if (count > 0) {
+      logger.info(`Reset ${count} scanned_docs row(s) stuck in 'processing' from a previous restart`);
+    }
+  }).catch((error) => {
+    logger.error("resetStaleProcessingScans failed at boot:", error);
+  });
 });

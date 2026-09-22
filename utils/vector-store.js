@@ -6,9 +6,15 @@ const embeddings = new OpenAIEmbeddings({
     apiKey: process.env.OPENAI_API_KEY,
 });
 
-export async function getVectorStore(tableName) {
+/**
+ * @description gets/creates a pgvector-backed LangChain vector store for a given table.
+ * @param {string} tableName - the pgvector table name (also the LangChain "collection")
+ * @param {object} [connectionOptions] - overrides the default RAG DB connection (e.g. to point at yl_db); read lazily at call time, not module load time
+ * @returns {Promise<PGVectorStore>}
+ */
+export async function getVectorStore(tableName, connectionOptions) {
     return await PGVectorStore.initialize(embeddings, {
-        postgresConnectionOptions: {
+        postgresConnectionOptions: connectionOptions || {
             host: process.env.DB_HOST || "localhost",
             port: Number(process.env.DB_PORT || 5432),
             user: process.env.DB_USER || "postgres",
